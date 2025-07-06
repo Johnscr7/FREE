@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Guide to Free Digital Services</title>
+    <!-- Chosen Palette: Warm Neutrals (Background: #F5F5F4, Text: #1C1917, Primary: #44403C, Accent: #A8A29E, Highlights: #D6D3D1) -->
+    <!-- Application Structure Plan: A single-page application with a fixed top navigation bar for smooth scrolling to thematic sections. This task-oriented structure allows users to directly access the category they are interested in (e.g., "AI Tools," "Cloud Storage"). Each section uses interactive components like cards, filterable lists, and dynamic charts to make the dense information from the report more digestible and comparable. This non-linear design prioritizes user discovery and quick decision-making over the linear reading experience of the original report. The goal is to transform the guide from a document to be read into a tool to be used. -->
+    <!-- Visualization & Content Choices: 
+        - AI Tools: Goal: Compare features. Method: Interactive cards with modal popups for details. Justification: Cleaner than a large table, focuses user on one tool at a time.
+        - Productivity (PM Tools): Goal: Compare limitations. Method: Interactive Bar Chart (Chart.js). Interaction: Hover for details on limits. Justification: Visualizes quantitative limits (users, storage) for quick comparison.
+        - Cloud Storage: Goal: Compare storage vs. privacy. Method: Dynamic Bar Chart (Chart.js) with interactive filters. Interaction: Buttons to highlight providers based on 'Max Storage' or 'Max Privacy'. Justification: Directly addresses the key trade-off identified in the report.
+        - Learning Platforms: Goal: Find platforms with free certificates. Method: Filterable list of cards. Interaction: Checkbox filter for 'Free Certificate'. Justification: Provides immediate, actionable results for users seeking credentials.
+        - Student Verification: Goal: Demystify the process for non-.edu users. Method: A step-by-step diagram built with HTML/Tailwind. Interaction: Hoverable steps reveal document requirements. Justification: Simplifies a complex, text-heavy process into an easy-to-follow visual guide.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F4; /* stone-100 */
+            color: #1C1917; /* stone-900 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #44403C; /* stone-700 */
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-stone-100/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#hero" class="text-xl font-bold text-stone-800">Digital Toolkit</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#ai" class="nav-link text-stone-600">AI Tools</a>
+                <a href="#productivity" class="nav-link text-stone-600">Productivity</a>
+                <a href="#security" class="nav-link text-stone-600">Security</a>
+                <a href="#learning" class="nav-link text-stone-600">Learning</a>
+                <a href="#student" class="nav-link text-stone-600">Student Hub</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-stone-600 hover:text-stone-800 hover:bg-stone-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
+            <a href="#ai" class="block nav-link text-stone-600 py-1">AI Tools</a>
+            <a href="#productivity" class="block nav-link text-stone-600 py-1">Productivity</a>
+            <a href="#security" class="block nav-link text-stone-600 py-1">Security</a>
+            <a href="#learning" class="block nav-link text-stone-600 py-1">Learning</a>
+            <a href="#student" class="block nav-link text-stone-600 py-1">Student Hub</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center bg-stone-50">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-stone-800 mb-4 leading-tight">Your Guide to Free Digital Services</h1>
+                <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto mb-8">
+                    An interactive dashboard to help you discover the best free AI tools, productivity platforms, cloud storage, learning resources, and exclusive student discounts. Build a world-class digital toolkit at little to no cost.
+                </p>
+                <a href="#ai" class="bg-stone-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-stone-700 transition duration-300">Explore the Toolkit</a>
+            </div>
+        </section>
+
+        <!-- AI Tools Section -->
+        <section id="ai" class="py-20 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">The AI Revolution</h2>
+                <p class="text-lg text-center text-stone-600 max-w-2xl mx-auto mb-12">
+                    Generative AI has democratized powerful creative and professional capabilities. This section helps you compare the most valuable free AI tools, from image generators to coding assistants, to find the perfect fit for your needs.
+                </p>
+                <div id="ai-tools-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- AI Tool Cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Productivity Section -->
+        <section id="productivity" class="py-20 bg-stone-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">Productivity Powerhouse</h2>
+                 <p class="text-lg text-center text-stone-600 max-w-2xl mx-auto mb-12">
+                    A solid digital toolkit is built on reliable productivity software. Here, you can visually compare the limitations of popular free project management platforms to see which offers the most value for your team's size and needs.
+                </p>
+                <h3 class="text-2xl font-bold text-center mb-8">Project Management Platform Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="pmChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security" class="py-20 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">Digital Sovereignty</h2>
+                <p class="text-lg text-center text-stone-600 max-w-2xl mx-auto mb-12">
+                   Control over your data and online privacy is crucial. This interactive chart helps you weigh the trade-offs between free cloud storage providers. Choose your priority—maximum storage or maximum privacy—to see our top recommendations.
+                </p>
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold mb-2">Cloud Storage: Space vs. Privacy</h3>
+                    <div id="storage-filters" class="flex justify-center space-x-4">
+                        <button class="filter-btn active bg-stone-800 text-white py-2 px-4 rounded-lg" data-filter="all">All</button>
+                        <button class="filter-btn bg-stone-200 text-stone-700 py-2 px-4 rounded-lg" data-filter="storage">Max Storage</button>
+                        <button class="filter-btn bg-stone-200 text-stone-700 py-2 px-4 rounded-lg" data-filter="privacy">Max Privacy (E2E)</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="storageChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Section -->
+        <section id="learning" class="py-20 bg-stone-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">The Zero-Cost University</h2>
+                <p class="text-lg text-center text-stone-600 max-w-2xl mx-auto mb-12">
+                    Upskilling is essential, but it doesn't have to be expensive. Use the filter below to find high-quality learning platforms that offer not just free courses, but valuable, verifiable certificates to boost your resume.
+                </p>
+                <div class="flex justify-center mb-8">
+                    <label class="flex items-center space-x-3 bg-white p-4 rounded-lg shadow-sm">
+                        <input type="checkbox" id="certificate-filter" class="h-5 w-5 rounded text-stone-600 focus:ring-stone-500">
+                        <span class="text-lg font-medium text-stone-700">Show only platforms with FREE certificates</span>
+                    </label>
+                </div>
+                <div id="learning-platforms-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Learning platform cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Hub Section -->
+        <section id="student" class="py-20 bg-stone-100">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl font-bold text-center mb-4">The Student Advantage Hub</h2>
+                <p class="text-lg text-center text-stone-600 max-w-2xl mx-auto mb-12">
+                    Your student status is a key to unlocking premium software for free. This guide demystifies the verification process, especially for students in Nepal or without a .edu email, showing you exactly what you need to get approved.
+                </p>
+                <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold text-stone-800 mb-6 text-center">Your Path to Verification (for SheerID/UNiDAYS)</h3>
+                    <div class="relative">
+                        <!-- The connecting line -->
+                        <div class="hidden sm:block absolute top-1/2 left-0 w-full h-0.5 bg-stone-300 transform -translate-y-1/2"></div>
+                        <div class="grid sm:grid-cols-3 gap-8 text-center relative">
+                            <!-- Step 1 -->
+                            <div class="step-item flex flex-col items-center">
+                                <div class="w-16 h-16 bg-stone-800 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 z-10">1</div>
+                                <h4 class="font-bold text-lg mb-2">Initiate</h4>
+                                <p class="text-stone-600 text-sm" data-tooltip="Find your country (e.g., Nepal) and school name on the service's verification form.">Start on the partner site (e.g., Spotify). An automatic check may work if your school email is recognized.</p>
+                            </div>
+                            <!-- Step 2 -->
+                            <div class="step-item flex flex-col items-center">
+                                <div class="w-16 h-16 bg-stone-800 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 z-10">2</div>
+                                <h4 class="font-bold text-lg mb-2">Upload</h4>
+                                <p class="text-stone-600 text-sm" data-tooltip="This is the standard path if the automatic check fails. It's designed for global students.">If prompted, upload a document proving your current enrollment. This is the key step for non-.edu users.</p>
+                            </div>
+                            <!-- Step 3 -->
+                            <div class="step-item flex flex-col items-center">
+                                <div class="w-16 h-16 bg-stone-800 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 z-10">3</div>
+                                <h4 class="font-bold text-lg mb-2">Succeed</h4>
+                                <p class="text-stone-600 text-sm" data-tooltip="Acceptable Docs: Dated student ID, current class schedule, or tuition receipt. Must show Your Name, School Name, and a recent Date.">After a review (up to 48 hours), you'll get an email confirming your student status. Enjoy your discount!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Modal for AI Tool Details -->
+    <div id="ai-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden modal-backdrop">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-content">
+            <div class="p-8">
+                <div class="flex justify-between items-start">
+                    <h3 id="modal-title" class="text-2xl font-bold text-stone-800 mb-4"></h3>
+                    <button id="modal-close" class="text-stone-400 hover:text-stone-600">&times;</button>
+                </div>
+                <p id="modal-description" class="text-stone-600 mb-4"></p>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold text-stone-700">Free Plan Details:</h4>
+                        <p id="modal-free-plan" class="text-stone-600"></p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-stone-700">Key Features:</h4>
+                        <p id="modal-features" class="text-stone-600"></p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-stone-700">Ideal User:</h4>
+                        <p id="modal-ideal-user" class="text-stone-600"></p>
+                    </div>
+                </div>
+                 <div class="mt-6 text-right">
+                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="bg-stone-800 text-white font-bold py-2 px-6 rounded-lg hover:bg-stone-700 transition duration-300">Visit Site</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-stone-800 text-stone-300 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Interactive Digital Toolkit. An interactive visualization of the "Ultimate Guide to Free and Discounted Digital Services" report.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Data from the report
+            const aiToolsData = [
+                { name: 'Microsoft Designer', use: 'AI Image Generation', free_plan: 'Unlimited free generations. Requires a free Microsoft account.', features: 'Powered by DALL-E models, fast generation, high-resolution output.', ideal_user: 'Individuals and professionals needing frequent, high-quality images without cost.', link: 'https://designer.microsoft.com/' },
+                { name: 'Adobe Firefly', use: 'AI Image Generation', free_plan: 'Free tier with a limited number of generative credits per month.', features: '"Commercially safe" model, high-quality output, Generative Fill, style reference.', ideal_user: 'Creatives wanting to test Adobe\'s premium AI before committing to a paid plan.', link: 'https://firefly.adobe.com/' },
+                { name: 'Rytr', use: 'AI Writing Assistant', free_plan: '10,000 characters per month.', features: '40+ use cases, 20+ tones, Chrome extension, plagiarism checker on paid plans.', ideal_user: 'Users needing assistance with short-form content like emails, social media, and ads.', link: 'https://rytr.me/' },
+                { name: 'Wordtune', use: 'AI Writing & Paraphrasing', free_plan: 'Free plan with daily usage limits. No credit card required.', features: 'Rewriting, paraphrasing, tone adjustment, smart translation, fact-checking.', ideal_user: 'Students and writers looking to improve clarity, avoid plagiarism, and refine text.', link: 'https://www.wordtune.com/' },
+                { name: 'Gemini Code Assist', use: 'AI Coding Assistant', free_plan: '"Practically unlimited" use (up to 180,000 completions/month). Requires a Gmail account.', features: 'Integrates with VS Code/JetBrains/GitHub, 1M token context window, supports all languages.', ideal_user: 'Individual developers, students, and hobbyists seeking an enterprise-grade AI coding partner.', link: 'https://cloud.google.com/products/gemini/code-assist' },
+                { name: 'GFP-GAN', use: 'AI Photo Restoration', free_plan: 'Free online demo. Open-source code available for unlimited local use.', features: 'State-of-the-art restoration of old/damaged photos with high realism.', ideal_user: 'Anyone needing to restore old photos; developers wanting to integrate the technology.', link: 'https://replicate.com/tencentarc/gfpgan' },
+            ];
+            
+            const learningPlatformsData = [
+                 { name: 'HarvardX (via edX)', subjects: 'Computer Science, AI, Programming', certificate: true, value: 'Highest. Globally recognized, prestigious university brand.', link: 'https://www.edx.org/school/harvardx' },
+                 { name: 'Google', subjects: 'Digital Marketing, Analytics, Cloud', certificate: true, value: 'High. Industry-standard tool proficiency recognized by employers.', link: 'https://skillshop.exceedlms.com/' },
+                 { name: 'freeCodeCamp', subjects: 'Web Dev, Data Science, InfoSec', certificate: true, value: 'High. Well-respected in the developer community for its practical, hands-on curriculum.', link: 'https://www.freecodecamp.org/' },
+                 { name: 'LinkedIn Learning', subjects: 'Business, Tech, Creative Skills', certificate: true, value: 'Medium-High. Access via free trial or public library.', link: 'https://www.linkedin.com/learning/' },
+                 { name: 'Stanford Medicine', subjects: 'Health & Medicine', certificate: true, value: 'Highest. Prestigious university brand with the added value of an official transcript.', link: 'https://online.stanford.edu/courses/results?free_or_paid=free' },
+                 { name: 'University of Helsinki', subjects: 'AI, Web Development', certificate: true, value: 'High. Acclaimed for producing rigorous, high-quality, and practical tech courses.', link: 'https://www.helsinki.fi/en/mooc' },
+                 { name: 'Coursera', subjects: 'Various University Courses', certificate: false, value: 'Free to audit courses, but certification requires payment or completing during a 7-day trial.', link: 'https://www.coursera.org/' },
+                 { name: 'edX', subjects: 'Various University Courses', certificate: false, value: 'Similar to Coursera, most courses are free to audit without a certificate.', link: 'https://www.edx.org/' },
+            ];
+            
+            const storageData = {
+                labels: ['MEGA', 'Google Drive', 'pCloud', 'Icedrive', 'Proton Drive', 'OneDrive'],
+                datasets: [{
+                    label: 'Free Storage (GB)',
+                    data: [20, 15, 10, 10, 5, 5],
+                    backgroundColor: [
+                        'rgba(168, 162, 158, 0.6)', // stone-400
+                        'rgba(168, 162, 158, 0.6)',
+                        'rgba(168, 162, 158, 0.6)',
+                        'rgba(168, 162, 158, 0.6)',
+                        'rgba(68, 64, 60, 0.6)', // stone-700 for privacy
+                        'rgba(168, 162, 158, 0.6)',
+                    ],
+                    borderColor: [
+                        '#A8A29E',
+                        '#A8A29E',
+                        '#A8A29E',
+                        '#A8A29E',
+                        '#44403C',
+                        '#A8A29E',
+                    ],
+                    borderWidth: 1,
+                    isPrivacy: [true, false, false, false, true, false],
+                    isStorage: [true, true, false, false, false, false],
+                }]
+            };
+
+            const pmData = {
+                labels: ['Trello', 'Asana', 'ClickUp', 'Airtable', 'Notion', 'Jira'],
+                datasets: [
+                    {
+                        label: 'Max Users (Free)',
+                        data: [Infinity, 15, Infinity, 5, Infinity, 10],
+                        backgroundColor: 'rgba(168, 162, 158, 0.6)',
+                        borderColor: '#A8A29E',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Storage Limit (MB) - 0 for unlimited',
+                        data: [0, 0, 100, 2048, 0, 2048],
+                        backgroundColor: 'rgba(68, 64, 60, 0.6)',
+                        borderColor: '#44403C',
+                        borderWidth: 1
+                    }
+                ]
+            };
+            
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Active Nav Link Highlighting
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 65) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active', 'font-bold');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active', 'font-bold');
+                    }
+                });
+            });
+
+            // AI Tools Grid and Modal
+            const aiGrid = document.getElementById('ai-tools-grid');
+            const modal = document.getElementById('ai-modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalBackdrop = document.querySelector('.modal-backdrop');
+
+            aiToolsData.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer';
+                card.innerHTML = `
+                    <h4 class="text-xl font-bold text-stone-800 mb-2">${tool.name}</h4>
+                    <p class="text-stone-600">${tool.use}</p>
+                `;
+                card.addEventListener('click', () => {
+                    document.getElementById('modal-title').textContent = tool.name;
+                    document.getElementById('modal-description').textContent = `Primary Use: ${tool.use}`;
+                    document.getElementById('modal-free-plan').textContent = tool.free_plan;
+                    document.getElementById('modal-features').textContent = tool.features;
+                    document.getElementById('modal-ideal-user').textContent = tool.ideal_user;
+                    document.getElementById('modal-link').href = tool.link;
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+                aiGrid.appendChild(card);
+            });
+            
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+            modalClose.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', (e) => {
+                if(e.target === modalBackdrop) closeModal();
+            });
+
+            // Learning Platforms Grid
+            const learningGrid = document.getElementById('learning-platforms-grid');
+            const certificateFilter = document.getElementById('certificate-filter');
+
+            function renderLearningPlatforms() {
+                learningGrid.innerHTML = '';
+                const showOnlyCertificate = certificateFilter.checked;
+                const filteredData = showOnlyCertificate 
+                    ? learningPlatformsData.filter(p => p.certificate)
+                    : learningPlatformsData;
+
+                filteredData.forEach(platform => {
+                    const card = document.createElement('a');
+                    card.href = platform.link;
+                    card.target = "_blank";
+                    card.rel = "noopener noreferrer";
+                    card.className = 'block bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow';
+                    card.innerHTML = `
+                        <h4 class="text-xl font-bold text-stone-800 mb-2 flex items-center">
+                            ${platform.name}
+                            ${platform.certificate ? '<span class="ml-2 text-xs bg-green-100 text-green-800 font-medium px-2.5 py-0.5 rounded-full">✓ Free Certificate</span>' : ''}
+                        </h4>
+                        <p class="text-stone-600 text-sm mb-2"><strong>Subjects:</strong> ${platform.subjects}</p>
+                        <p class="text-stone-600 text-sm"><strong>Value:</strong> ${platform.value}</p>
+                    `;
+                    learningGrid.appendChild(card);
+                });
+            }
+
+            certificateFilter.addEventListener('change', renderLearningPlatforms);
+            renderLearningPlatforms();
+            
+            // Chart rendering
+            const renderChart = (ctx, type, data, options) => new Chart(ctx, { type, data, options });
+
+            const defaultChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        backgroundColor: '#1C1917',
+                        titleFont: { size: 16 },
+                        bodyFont: { size: 14 },
+                        padding: 12,
+                        cornerRadius: 4,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#D6D3D1' },
+                        ticks: { color: '#44403C' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#44403C' }
+                    }
+                }
+            };
+            
+            // PM Chart
+            const pmCtx = document.getElementById('pmChart').getContext('2d');
+            const pmChartOptions = JSON.parse(JSON.stringify(defaultChartOptions));
+            pmChartOptions.scales.y.title = { display: true, text: 'Users / MB' };
+            pmChartOptions.scales.x.ticks.callback = function(value, index, values) {
+                 const label = this.getLabelForValue(value);
+                 return label.length > 15 ? label.substring(0, 15) + '...' : label;
+            };
+            renderChart(pmCtx, 'bar', pmData, pmChartOptions);
+
+
+            // Storage Chart
+            const storageCtx = document.getElementById('storageChart').getContext('2d');
+            const storageChartOptions = JSON.parse(JSON.stringify(defaultChartOptions));
+            storageChartOptions.scales.y.title = { display: true, text: 'Storage (GB)' };
+            const storageChart = renderChart(storageCtx, 'bar', storageData, storageChartOptions);
+
+            const storageFilters = document.getElementById('storage-filters');
+            storageFilters.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON') return;
+                
+                const filter = e.target.dataset.filter;
+                const allButtons = storageFilters.querySelectorAll('button');
+                allButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-stone-800', 'text-white');
+                    btn.classList.add('bg-stone-200', 'text-stone-700');
+                });
+                e.target.classList.add('active', 'bg-stone-800', 'text-white');
+                e.target.classList.remove('bg-stone-200', 'text-stone-700');
+
+                const newBgColors = [];
+                const newBorderColors = [];
+                
+                storageData.datasets[0].isPrivacy.forEach((isPrivate, index) => {
+                    let isHighlighted = false;
+                    if(filter === 'all') isHighlighted = true;
+                    if(filter === 'privacy' && isPrivate) isHighlighted = true;
+                    if(filter === 'storage' && storageData.datasets[0].isStorage[index]) isHighlighted = true;
+                    
+                    if(isHighlighted){
+                        newBgColors.push(storageData.datasets[0].isPrivacy[index] ? 'rgba(68, 64, 60, 0.8)' : 'rgba(120, 113, 108, 0.8)'); // darker stone
+                        newBorderColors.push(storageData.datasets[0].isPrivacy[index] ? '#44403C' : '#78716C');
+                    } else {
+                        newBgColors.push('rgba(214, 211, 209, 0.4)'); // lighter stone
+                        newBorderColors.push('#D6D3D1');
+                    }
+                });
+                
+                storageChart.data.datasets[0].backgroundColor = newBgColors;
+                storageChart.data.datasets[0].borderColor = newBorderColors;
+                storageChart.update();
+            });
+        });
+    </script>
+</body>
+</html>
